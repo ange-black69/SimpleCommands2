@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+
 import argo.jdom.JsonNode;
 
 import net.minecraft.server.MinecraftServer;
@@ -23,8 +26,7 @@ import dries007.SimpleCommands.commands.*;
 import dries007.SimpleCore.SimpleCore;
 import dries007.SimpleCore.data;
 
-@Mod(modid = "SimpleCommands", name= "SimpleCommands", version = "0", dependencies = "after:SimpleCore")
-public class SimpleCommands 
+public class SimpleCommands extends DummyModContainer 
 {
 	public static String PingMsg;
 	public static String color;
@@ -32,10 +34,28 @@ public class SimpleCommands
 	public static MinecraftServer server;
 	public static NBTTagCompound worldData;
 	public static Integer TPAtimeout = 0;
-	@Instance("SimpleCommands")
-	public SimpleCommands instance;
 	
-	@ServerStarting
+	public SimpleCommands()
+	{
+		super(new ModMetadata());
+		ModMetadata meta	=	getMetadata();
+        meta.modId      	=	"SimpleCommands";
+        meta.name       	=	"SimpleCommands";
+        meta.version    	=	"0.1";
+        meta.authorList 	=	Arrays.asList("Dries007");
+        meta.credits		=	"Dries007, ChickenBones for making his mods open-source!";
+        meta.description	=	"Adds a bunch of commands.";
+        meta.url        	=	"http://ssm.dries007.net";
+	}
+	
+	@Override
+	public boolean registerBus(EventBus bus, LoadController controller)
+	{
+		bus.register(this);
+		return true;
+	}
+	
+	@Subscribe
 	public void serverStarting(FMLServerStartingEvent event)
 	{
 		server = ModLoader.getMinecraftServerInstance();
@@ -48,7 +68,7 @@ public class SimpleCommands
 		TickRegistry.registerScheduledTickHandler(new TickHandler(), Side.SERVER);
 	}
 	
-	@ServerStopping
+	@Subscribe
 	public void serverStopping(FMLServerStoppingEvent event)
 	{
 		data.saveData(worldData, "worldData");
