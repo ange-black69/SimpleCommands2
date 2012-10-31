@@ -13,7 +13,10 @@ public class CommandRain extends CommandBase
 
     public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
     {
-    	MinecraftServer.getServer().worldServers[0].setRainStrength(0);
+    	for (int var3 = 0; var3 < MinecraftServer.getServer().worldServers.length; ++var3)
+        {
+            MinecraftServer.getServer().worldServers[var3].setRainStrength(0);
+        }
         notifyAdmins(par1ICommandSender, "Rain turned off.", new Object[0]);
     }
     

@@ -97,7 +97,7 @@ public class SimpleCommands extends DummyModContainer
 		manager.registerCommand(new CommandLag());
 		manager.registerCommand(new CommandItems());
 		manager.registerCommand(new CommandMobs());
-		
+		manager.registerCommand(new CommandKit());
 		//PW
 		manager.registerCommand(new CommandPw()); 		
 		manager.registerCommand(new CommandPwSet());	
