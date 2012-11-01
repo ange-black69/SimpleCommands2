@@ -10,6 +10,11 @@ import net.minecraft.src.*;
 
 public class CommandWarpSet extends CommandBase
 {
+	public CommandWarpSet()
+	{
+		//Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "warpset";
@@ -29,7 +34,7 @@ public class CommandWarpSet extends CommandBase
     {
     	if (args.length!=1) throw new WrongUsageException("/" + getCommandName() + " <name>");
     	NBTTagCompound warps = SimpleCommands.worldData.getCompoundTag("warps");
-    	EntityPlayer player = (EntityPlayer) sender;
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	if (!warps.hasKey(args[0]))
     	{
     		NBTTagCompound warp = new NBTTagCompound(args[0]);
@@ -56,7 +61,7 @@ public class CommandWarpSet extends CommandBase
     
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
-        return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP.warpmod");
+        return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP.warp.admin");
     }
 
 }

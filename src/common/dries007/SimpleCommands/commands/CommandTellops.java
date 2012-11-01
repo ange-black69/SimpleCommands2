@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandTellops extends CommandBase
 {
+	public CommandTellops()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "tellops";

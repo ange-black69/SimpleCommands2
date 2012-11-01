@@ -8,6 +8,11 @@ import net.minecraft.src.*;
 
 public class CommandTp extends CommandBase
 {
+	public CommandTp()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "tp";

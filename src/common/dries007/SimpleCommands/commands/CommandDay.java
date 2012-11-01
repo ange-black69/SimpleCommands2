@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandDay extends CommandBase
 {
+	public CommandDay()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "day";

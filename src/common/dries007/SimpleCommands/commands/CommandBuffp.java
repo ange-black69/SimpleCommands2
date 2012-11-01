@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandBuffp extends CommandBase
 {
+	public CommandBuffp()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "buffp";
@@ -26,7 +31,7 @@ public class CommandBuffp extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] par2ArrayOfStr)
     {
-    	EntityPlayer player = func_71540_a(par2ArrayOfStr[0]);
+    	EntityPlayer target = func_82359_c(sender, par2ArrayOfStr[0]);
     	try
     	{
     		int ID = 0;
@@ -42,11 +47,10 @@ public class CommandBuffp extends CommandBase
     			ID = Integer.valueOf(par2ArrayOfStr[1]);
     			break;
     		default:
-    			buffhelp(player);
+    			buffhelp(sender);
     		}
     		if (ID!=0)
     		{
-    			EntityPlayer target = (EntityPlayer) sender;
     			PotionEffect eff = new PotionEffect(ID, dur, amp);
     			target.addPotionEffect(eff);
     		}
@@ -57,43 +61,30 @@ public class CommandBuffp extends CommandBase
     	}
     }
 
-    public void buffhelp(EntityPlayer player)
+    public void buffhelp(ICommandSender sender)
     {
-    	player.addChatMessage("ID    =>Name");
-		player.addChatMessage("1     =>Speed");
-		player.addChatMessage("2     =>Slow");
-		player.addChatMessage("3     =>Haste");
-		player.addChatMessage("4     =>Fatigue");
-		player.addChatMessage("5     =>Strength");
-		player.addChatMessage("6     =>Heal");
-		player.addChatMessage("7     =>Damage");
-		player.addChatMessage("8     =>Jump");
-		player.addChatMessage("9     =>Nausea");
-		player.addChatMessage("10    =>Regen");
-		player.addChatMessage("11    =>Resistance");
-		player.addChatMessage("12    =>Fire Resistance");
-		player.addChatMessage("13    =>Waterbreathing");
-		player.addChatMessage("14    =>Invisibility");
-		player.addChatMessage("15    =>Blindness");
-		player.addChatMessage("16    =>Nightvision");
-		player.addChatMessage("17    =>Hunger");
-		player.addChatMessage("18    =>Weakness");
-		player.addChatMessage("19    =>Poison");
+    	sender.sendChatToPlayer("ID    =>Name");
+		sender.sendChatToPlayer("1     =>Speed");
+		sender.sendChatToPlayer("2     =>Slow");
+		sender.sendChatToPlayer("3     =>Haste");
+		sender.sendChatToPlayer("4     =>Fatigue");
+		sender.sendChatToPlayer("5     =>Strength");
+		sender.sendChatToPlayer("6     =>Heal");
+		sender.sendChatToPlayer("7     =>Damage");
+		sender.sendChatToPlayer("8     =>Jump");
+		sender.sendChatToPlayer("9     =>Nausea");
+		sender.sendChatToPlayer("10    =>Regen");
+		sender.sendChatToPlayer("11    =>Resistance");
+		sender.sendChatToPlayer("12    =>Fire Resistance");
+		sender.sendChatToPlayer("13    =>Waterbreathing");
+		sender.sendChatToPlayer("14    =>Invisibility");
+		sender.sendChatToPlayer("15    =>Blindness");
+		sender.sendChatToPlayer("16    =>Nightvision");
+		sender.sendChatToPlayer("17    =>Hunger");
+		sender.sendChatToPlayer("18    =>Weakness");
+		sender.sendChatToPlayer("19    =>Poison");
     }
-    
-    protected EntityPlayer func_71540_a(String par1Str)
-    {
-        EntityPlayerMP var2 = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
 
-        if (var2 == null)
-        {
-            throw new PlayerNotFoundException();
-        }
-        else
-        {
-            return var2;
-        }
-    }
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
         return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP."+getCommandName());

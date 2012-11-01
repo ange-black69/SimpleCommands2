@@ -10,6 +10,11 @@ import net.minecraft.src.*;
 
 public class CommandSethome extends CommandBase
 {
+	public CommandSethome()
+	{
+		//Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "sethome";
@@ -27,7 +32,7 @@ public class CommandSethome extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] args)
     {
-    	EntityPlayer player = ((EntityPlayer) sender);
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	NBTTagCompound home = new NBTTagCompound();
     	home.setInteger("dim", player.dimension);
     	home.setDouble("X", player.posX);

@@ -10,6 +10,12 @@ import net.minecraft.src.*;
 
 public class CommandWarp extends CommandBase
 {
+	public CommandWarp()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+		Permissions.addPermission("SP.warp.admin");
+	}
+	
     public String getCommandName()
     {
         return "warp";
@@ -29,7 +35,7 @@ public class CommandWarp extends CommandBase
     {
     	if (args.length!=1) throw new WrongUsageException("/" + getCommandName() + " <name>");
     	NBTTagCompound warps = SimpleCommands.worldData.getCompoundTag("warps");
-    	EntityPlayer player = (EntityPlayer) sender;
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	if (warps.hasKey(args[0]))
     	{
     		PotionEffect effect = new PotionEffect(9, 120 , 4);

@@ -10,6 +10,11 @@ import net.minecraft.src.*;
 
 public class CommandHome extends CommandBase
 {
+	public CommandHome()
+	{
+		Permissions.addPermission("SP.home");
+	}
+	
     public String getCommandName()
     {
         return "home";
@@ -27,7 +32,7 @@ public class CommandHome extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] args)
     {
-    	EntityPlayer player = ((EntityPlayer) sender);
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	if(Permissions.getPlayerSetting(player).hasKey("home"))
     	{
     		PotionEffect effect = new PotionEffect(9, 120 , 4);

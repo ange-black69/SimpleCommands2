@@ -10,6 +10,11 @@ import net.minecraft.src.*;
 
 public class CommandPw extends CommandBase
 {
+	public CommandPw()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "pw";
@@ -29,8 +34,7 @@ public class CommandPw extends CommandBase
     {
     	if (args.length!=1) throw new WrongUsageException("/" + getCommandName() + " <name>");
     	NBTTagCompound data = Permissions.getPlayerSetting(sender.getCommandSenderName()).getCompoundTag("PW");
-    	EntityPlayer player;
-    	player = (EntityPlayer) sender;
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	if (data.hasKey(args[0]))
     	{
     		PotionEffect effect = new PotionEffect(9, 120 , 4);

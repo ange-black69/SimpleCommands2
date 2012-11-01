@@ -17,6 +17,11 @@ import net.minecraft.src.WrongUsageException;
 
 public class CommandHeal extends CommandBase
 {
+	public CommandHeal()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "heal";
@@ -34,7 +39,7 @@ public class CommandHeal extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] par2ArrayOfStr)
     {
-    	EntityPlayer target = par2ArrayOfStr.length >= 1 ? this.func_71540_a(par2ArrayOfStr[0]) : getCommandSenderAsPlayer(sender);
+    	EntityPlayer target = par2ArrayOfStr.length >= 1 ? func_82359_c(sender, par2ArrayOfStr[0]) : getCommandSenderAsPlayer(sender);
     	
     	if (target != sender)
     	{
@@ -52,20 +57,7 @@ public class CommandHeal extends CommandBase
     		target.addChatMessage("You have eaten GlaDOS' cake.");
     	}
     }
-
-    protected EntityPlayer func_71540_a(String par1Str)
-    {
-        EntityPlayerMP var2 = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
-
-        if (var2 == null)
-        {
-            throw new PlayerNotFoundException();
-        }
-        else
-        {
-            return var2;
-        }
-    }
+    
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
         return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP."+getCommandName());

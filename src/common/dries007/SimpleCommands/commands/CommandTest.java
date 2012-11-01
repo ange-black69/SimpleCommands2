@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandTest extends CommandBase
 {
+	public CommandTest()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "test";
@@ -16,10 +21,9 @@ public class CommandTest extends CommandBase
 
     public void processCommand(ICommandSender sender, String[] args)
     {
-    	EntityPlayerMP player = ((EntityPlayerMP) sender);
+    	EntityPlayerMP player = getCommandSenderAsPlayer(sender);
     	player.sendChatToPlayer("This is a debug commands for testing purposes only.");
     	
-    	player.theItemInWorldManager.setBlockReachDistance(0D);
     }
     
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)

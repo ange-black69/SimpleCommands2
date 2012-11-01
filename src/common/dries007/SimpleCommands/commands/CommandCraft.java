@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandCraft extends CommandBase
 {
+	public CommandCraft()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "craft";
@@ -16,7 +21,7 @@ public class CommandCraft extends CommandBase
 
     public void processCommand(ICommandSender sender, String[] args)
     {
-    	EntityPlayerMP player = ((EntityPlayerMP) sender);
+    	EntityPlayerMP player = getCommandSenderAsPlayer(sender);
     	player.incrementWindowID();
     	player.playerNetServerHandler.sendPacketToPlayer(new Packet100OpenWindow(player.currentWindowId, 1, "Crafting", 9));
     	player.craftingInventory = new Crafting(player.inventory, player.worldObj, 0, 0, 0);

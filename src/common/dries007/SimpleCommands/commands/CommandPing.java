@@ -10,6 +10,11 @@ import net.minecraft.src.*;
 
 public class CommandPing extends CommandBase
 {
+	public CommandPing()
+	{
+		//Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "ping";

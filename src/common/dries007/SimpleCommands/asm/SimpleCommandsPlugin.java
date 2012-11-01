@@ -11,8 +11,6 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import dries007.SimpleCommands.SimpleCommands;
-import dries007.SimpleCore.SimpleCore;
-import dries007.SimpleCore.VanillaInterface;
 
 public class SimpleCommandsPlugin implements IFMLLoadingPlugin, IFMLCallHook
 {

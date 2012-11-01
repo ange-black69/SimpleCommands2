@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandSpawn extends CommandBase
 {
+	public CommandSpawn()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "spawn";
@@ -17,7 +22,7 @@ public class CommandSpawn extends CommandBase
     public void processCommand(ICommandSender sender, String[] args)
     {
     	MinecraftServer server = ModLoader.getMinecraftServerInstance();
-    	EntityPlayer player = (EntityPlayer) sender;
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	if(SimpleCore.rankData.getCompoundTag(Permissions.getRank(player)).hasKey("Spawn"))
 		{
 			NBTTagCompound data = SimpleCore.rankData.getCompoundTag(Permissions.getRank(player)).getCompoundTag("Spawn");

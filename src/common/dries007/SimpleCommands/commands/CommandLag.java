@@ -13,6 +13,11 @@ import net.minecraftforge.common.DimensionManager;
 
 public class CommandLag extends CommandBase
 {
+	public CommandLag()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "lag";

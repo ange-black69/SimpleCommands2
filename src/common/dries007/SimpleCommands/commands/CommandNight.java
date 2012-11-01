@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandNight extends CommandBase
 {
+	public CommandNight()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "night";

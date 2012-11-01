@@ -10,6 +10,11 @@ import net.minecraft.src.*;
 
 public class CommandPwSet extends CommandBase
 {
+	public CommandPwSet()
+	{
+		//Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "pwset";
@@ -30,8 +35,7 @@ public class CommandPwSet extends CommandBase
     	if (args.length!=1) throw new WrongUsageException("/" + getCommandName() + " <name>");
     	NBTTagCompound data = Permissions.getPlayerSetting(sender.getCommandSenderName());
     	NBTTagCompound PW = data.getCompoundTag("PW");
-    	EntityPlayer player;
-    	player = (EntityPlayer) sender;
+    	EntityPlayer player = getCommandSenderAsPlayer(sender);
     	if (!PW.hasKey(args[0]))
     	{
     		Double X = player.posX;

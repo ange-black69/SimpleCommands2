@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandChest extends CommandBase
 {
+	public CommandChest()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "chest";

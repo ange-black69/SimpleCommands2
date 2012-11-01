@@ -9,6 +9,11 @@ import net.minecraft.src.*;
 
 public class CommandBuff extends CommandBase
 {
+	public CommandBuff()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "buff";
@@ -20,6 +25,11 @@ public class CommandBuff extends CommandBase
     }
 
     public List getCommandAliases()
+    {
+        return null;
+    }
+    
+    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
     {
         return null;
     }
@@ -80,19 +90,6 @@ public class CommandBuff extends CommandBase
 		sender.sendChatToPlayer("19    =>Poison");
     }
     
-    protected EntityPlayer func_71540_a(String par1Str)
-    {
-        EntityPlayerMP var2 = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
-
-        if (var2 == null)
-        {
-            throw new PlayerNotFoundException();
-        }
-        else
-        {
-            return var2;
-        }
-    }
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
         return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP."+getCommandName());

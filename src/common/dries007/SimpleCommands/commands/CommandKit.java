@@ -10,6 +10,12 @@ import net.minecraft.src.*;
 
 public class CommandKit extends CommandBase
 {
+	public CommandKit()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+		Permissions.addPermission("SP.kit.admin");
+	}
+	
     public String getCommandName()
     {
         return "kit";
@@ -29,7 +35,7 @@ public class CommandKit extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] args)
     {
-    	EntityPlayerMP player = ((EntityPlayerMP) sender);
+    	EntityPlayerMP player = getCommandSenderAsPlayer(sender);
     	// End user
     	if(args.length==1)
     	{
@@ -54,7 +60,7 @@ public class CommandKit extends CommandBase
     		return;
     	}
     	// Settigns
-    	if(args.length==2)
+    	else if(args.length==2 && Permissions.hasPermission(sender.getCommandSenderName(), "SP.kit.admin"))
     	{
     		if(args[1].equalsIgnoreCase("save"))
     		{

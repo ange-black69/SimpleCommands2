@@ -12,6 +12,11 @@ import net.minecraft.src.*;
 
 public class CommandWarpDel extends CommandBase
 {
+	public CommandWarpDel()
+	{
+		//Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "warpdel";
@@ -64,7 +69,7 @@ public class CommandWarpDel extends CommandBase
     
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
-        return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP.warpmod");
+        return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP.warp.admin");
     }
 
 }

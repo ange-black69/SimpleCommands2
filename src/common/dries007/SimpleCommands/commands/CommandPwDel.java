@@ -12,6 +12,11 @@ import net.minecraft.src.*;
 
 public class CommandPwDel extends CommandBase
 {
+	public CommandPwDel()
+	{
+		//Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "pwdel";

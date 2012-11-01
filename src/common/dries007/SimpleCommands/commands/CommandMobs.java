@@ -13,6 +13,11 @@ import net.minecraft.src.*;
 
 public class CommandMobs extends CommandBase
 {
+	public CommandMobs()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "mobs";
@@ -25,7 +30,7 @@ public class CommandMobs extends CommandBase
 
     public void processCommand(ICommandSender sender, String[] args)
     {
-    	EntityPlayerMP player = ((EntityPlayerMP) sender);
+    	EntityPlayerMP player = getCommandSenderAsPlayer(sender);
     	World world = player.worldObj;
     	if(args.length>1) throw new WrongUsageException(getCommandUsage(sender));
     	

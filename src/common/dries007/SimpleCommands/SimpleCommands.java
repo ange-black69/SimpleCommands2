@@ -23,8 +23,7 @@ import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.registry.TickRegistry;
 import dries007.SimpleCommands.commands.*;
-import dries007.SimpleCore.SimpleCore;
-import dries007.SimpleCore.data;
+import dries007.SimpleCore.*;
 
 public class SimpleCommands extends DummyModContainer 
 {
