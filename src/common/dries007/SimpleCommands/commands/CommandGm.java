@@ -82,13 +82,9 @@ public class CommandGm extends CommandBase
      */
     public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
     {
-        return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"survival", "creative", "adventure"}): (par2ArrayOfStr.length == 2 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.func_71538_c()) : null);
+        return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, new String[] {"survival", "creative", "adventure"}): (par2ArrayOfStr.length == 2 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getAllUsernames()) : null);
     }
-
-    protected String[] func_71538_c()
-    {
-        return MinecraftServer.getServer().getAllUsernames();
-    }
+    
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
         return Permissions.hasPermission(par1ICommandSender.getCommandSenderName(), "SP."+getCommandName());

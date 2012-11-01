@@ -64,7 +64,15 @@ public class CommandItems extends CommandBase
     		sender.sendChatToPlayer("Amount of items removed:" + amount);
     	}
     	else throw new WrongUsageException(getCommandUsage(sender));
-    	
+    }
+    
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
+    {
+    	if(args.length == 1)
+    	{
+    		return getListOfStringsMatchingLastWord(args, "killall");
+    	}
+    	return null;
     }
     
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)

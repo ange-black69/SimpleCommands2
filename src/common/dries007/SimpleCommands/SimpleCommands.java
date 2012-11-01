@@ -18,6 +18,8 @@ import net.minecraft.src.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.world.WorldEvent;
+
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.event.*;
@@ -51,6 +53,7 @@ public class SimpleCommands extends DummyModContainer
 	public boolean registerBus(EventBus bus, LoadController controller)
 	{
 		bus.register(this);
+		MinecraftForge.EVENT_BUS.register(this);
 		return true;
 	}
 	
@@ -65,6 +68,12 @@ public class SimpleCommands extends DummyModContainer
 		worldData = data.loadData("worldData");
 		
 		TickRegistry.registerScheduledTickHandler(new TickHandler(), Side.SERVER);
+	}
+	
+	@ForgeSubscribe
+	public void chuckSave(WorldEvent.Save event)
+	{
+		data.saveData(worldData, "worldData");
 	}
 	
 	@Subscribe

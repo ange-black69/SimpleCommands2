@@ -1,5 +1,10 @@
 package dries007.SimpleCommands.commands;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import dries007.SimpleCommands.Crafting;
@@ -25,12 +30,29 @@ public class CommandKit extends CommandBase
     {
     	if(Permissions.hasPermission(sender.getCommandSenderName(), "SP.kit.admin"))
     	{
-    		return "/items <name> [save|delete]";
+    		return "/kit <name> [save|delete]";
     	}
     	else
     	{
-    		return "/items <name>";
+    		return "/kit <name>";
     	}
+    }
+    
+    public List addTabCompletionOptions(ICommandSender sender, String[] args)
+    {
+    	if(args.length == 1)
+    	{
+    		Set<String> kits = new HashSet<String>();
+    		Iterator i = SimpleCommands.worldData.getCompoundTag("kits").getTags().iterator();
+    		while(i.hasNext())
+    		{
+    			NBTTagCompound tag = (NBTTagCompound) i.next();
+    			kits.add(tag.getName());
+    			
+    		}
+    		return getListOfStringsFromIterableMatchingLastWord(args, kits);
+    	}
+    	return null;
     }
     
     public void processCommand(ICommandSender sender, String[] args)
