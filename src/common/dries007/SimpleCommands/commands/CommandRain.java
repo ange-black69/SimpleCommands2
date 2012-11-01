@@ -6,6 +6,11 @@ import net.minecraft.src.*;
 
 public class CommandRain extends CommandBase
 {
+	public CommandRain()
+	{
+		Permissions.addPermission("SP."+getCommandName());
+	}
+	
     public String getCommandName()
     {
         return "rain";
