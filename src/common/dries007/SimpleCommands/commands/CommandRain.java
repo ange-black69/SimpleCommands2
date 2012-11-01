@@ -20,7 +20,7 @@ public class CommandRain extends CommandBase
     {
     	for (int var3 = 0; var3 < MinecraftServer.getServer().worldServers.length; ++var3)
         {
-            MinecraftServer.getServer().worldServers[var3].setRainStrength(0);
+            MinecraftServer.getServer().worldServers[var3].getWorldInfo().setRaining(false);
         }
         notifyAdmins(par1ICommandSender, "Rain turned off.", new Object[0]);
     }
