@@ -35,6 +35,7 @@ public class CommandTpa extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] args)
     {
+    	if(args.length != 1) throw new WrongUsageException(getCommandUsage(sender));
     	if(args[0].equalsIgnoreCase("a"))
     	{
     		EntityPlayer player = getCommandSenderAsPlayer(sender);
@@ -42,7 +43,7 @@ public class CommandTpa extends CommandBase
     		sender.sendChatToPlayer("TPa accepted.");
     		source.sendChatToPlayer("TPa accepted.");
     		player.getEntityData().setString("TPA", ".");
-    		((EntityPlayerMP)source).playerNetServerHandler.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationPitch, player.rotationYaw);
+    		((EntityPlayerMP)source).playerNetServerHandler.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
     	}
     	else if(args[0].equalsIgnoreCase("d"))
     	{

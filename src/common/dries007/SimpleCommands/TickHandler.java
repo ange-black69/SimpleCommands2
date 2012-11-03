@@ -6,49 +6,56 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ModLoader;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
+import dries007.SimpleCore.SimpleCore;
 
 public class TickHandler implements IScheduledTickHandler
 {
 	public static List TPA = new ArrayList<EntityPlayer>();
+	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) 
 	{
+		List ToRemove = new ArrayList<EntityPlayer>();
+		
 		//Does TPA timeout
-		Iterator i = TPA.iterator();
-		while(i.hasNext())
+		try
 		{
-			EntityPlayer player = (EntityPlayer) i.next();
-			if(player.getEntityData().getString("TPA").equals("."))
+			Iterator i = TPA.iterator();
+			while(i.hasNext())
 			{
-				player.getEntityData().setInteger("TPAtime", 0);
-				TPA.remove(player);
-			}
-			int time = player.getEntityData().getInteger("TPAtime");
-			if(time==0)
-			{
-				TPA.remove(player);
-				try
+				EntityPlayerMP player = (EntityPlayerMP) i.next();
+				int time = player.getEntityData().getInteger("TPAtime");
+				if(player.getEntityData().getString("TPA").equals("."))
 				{
-					EntityPlayer source = ModLoader.getMinecraftServerInstance().getConfigurationManager().getPlayerForUsername(player.getEntityData().getString("TPA"));
-					source.addChatMessage("TPA timed out");
+					player.getEntityData().setInteger("TPAtime", 0);
+					ToRemove.add(player);
+				}
+				if(time==0)
+				{
+					ToRemove.add(player);
+					EntityPlayerMP source = SimpleCore.server.getConfigurationManager().getPlayerForUsername(player.getEntityData().getString("TPA").trim());
+					if(source==null) FMLLog.severe("TPA source was null, Username was: " + player.getEntityData().getString("TPA").trim());
+					else source.addChatMessage("TPA timed out");
 					player.addChatMessage("TPA timed out");
 				}
-				catch (Exception e)
+				else
 				{
-					FMLLog.severe(e.getMessage());
-				}
+					player.getEntityData().setInteger("TPAtime", time-1);
+				}	
 			}
-			else
-			{
-				player.getEntityData().setInteger("TPAtime", time-1);
-			}
+			TPA.removeAll(ToRemove);
 		}
-		
-		//Next!
+		catch(Exception e)
+		{
+			FMLLog.severe("Dafuq? SimpleCommands Error code: TickHandler.tickStart...");
+			FMLLog.severe("Please make a forum post if you get this. http://ssm.dries007.net");
+		}		
+		//Next!*/
 	}
 
 	@Override
