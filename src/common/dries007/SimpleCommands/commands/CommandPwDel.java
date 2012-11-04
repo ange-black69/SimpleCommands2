@@ -1,5 +1,6 @@
 package dries007.SimpleCommands.commands;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -63,8 +64,22 @@ public class CommandPwDel extends CommandBase
     
     public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-    	NBTTagCompound data = Permissions.getPlayerSetting(sender.getCommandSenderName()).getCompoundTag("PW");
-        return (List) data.getTags();
+    	if(args.length==1)
+    	{
+    		NBTTagCompound data = Permissions.getPlayerSetting(sender.getCommandSenderName()).getCompoundTag("PW");
+        	List<String> pws = new ArrayList<String>();
+        	Iterator i = data.getTags().iterator();
+        	while(i.hasNext())
+        	{
+        		NBTBase tag = (NBTBase)i.next();
+        		pws.add(tag.getName());
+        	}
+    		return getListOfStringsFromIterableMatchingLastWord(args, pws);
+    	}
+    	else
+    	{
+    		return null;
+    	}
     }
     
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)

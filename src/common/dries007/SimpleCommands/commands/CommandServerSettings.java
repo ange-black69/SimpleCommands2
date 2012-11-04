@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.relauncher.ReflectionHelper.UnableToAccessFieldException;
+
 import dries007.SimpleCommands.SimpleCommands;
 import dries007.SimpleCore.*;
 
@@ -35,7 +39,7 @@ public class CommandServerSettings extends CommandBase
     	return Arrays.asList(new String[] {"ss"});
     }
     
-    List<String> options = Arrays.asList(new String[] {"pvp", "buildlimit", "online", "animals", "npcs", "flight", "motd", "gamemode", "gm"});
+    List<String> options = Arrays.asList(new String[] {"pvp", "buildlimit", "online", "animals", "npcs", "flight", "motd", "gamemode", "gm", "monsters"});
     
     public void processCommand(ICommandSender sender, String[] args)
     {
@@ -43,7 +47,7 @@ public class CommandServerSettings extends CommandBase
     	if(args.length==0)
     	{
     		sender.sendChatToPlayer("List of available settings:");
-    		sender.sendChatToPlayer("pvp, buildlimit, online, animals, npcs, flight, motd, gamemode, gm");
+    		sender.sendChatToPlayer("pvp, buildlimit, online, animals, npcs, flight, motd, gamemode, gm, monsters");
     	}
     	else if(args.length==1)
     	{
@@ -89,6 +93,15 @@ public class CommandServerSettings extends CommandBase
 		{
 			sender.sendChatToPlayer("Animals are now:" + server.getCanSpawnAnimals());
 		}
+		else if(name.equalsIgnoreCase("monsters"))
+		{
+			for (int var2 = 0; var2 < server.worldServers.length; ++var2)
+	        {
+				Object value = ObfuscationReflectionHelper.getPrivateValue(World.class, server.worldServers[var2], "spawnHostileMobs");
+	            sender.sendChatToPlayer("For dimension " + var2 + ": " + value.toString());
+	        }
+			
+		}
 		else if(name.equalsIgnoreCase("npcs"))
 		{
 			sender.sendChatToPlayer("NPCs are now:" + server.getCanSpawnNPCs());
@@ -107,6 +120,10 @@ public class CommandServerSettings extends CommandBase
 	        {
 	            sender.sendChatToPlayer("For dimension " + var2 + ": " + server.worldServers[var2].getWorldInfo().getGameType().name());
 	        }	
+		}
+		else
+		{
+			sender.sendChatToPlayer(dries007.SimpleCore.Color.RED + name + " is not a recognized setting.");
 		}
     }
     
@@ -157,6 +174,22 @@ public class CommandServerSettings extends CommandBase
     			sender.sendChatToPlayer(dries007.SimpleCore.Color.RED + value + "is not true or false!");
     		}
 		}
+		else if(name.equalsIgnoreCase("monsters"))
+		{
+			try
+    		{
+				boolean bl = Boolean.parseBoolean(value);
+				for (int var2 = 0; var2 < server.worldServers.length; ++var2)
+		        {
+					ObfuscationReflectionHelper.setPrivateValue(World.class, server.worldServers[var2], bl, "spawnHostileMobs");
+		        }
+    			sender.sendChatToPlayer("Monsters set to :" + bl);
+    		}
+    		catch(Exception e)
+    		{
+    			sender.sendChatToPlayer(dries007.SimpleCore.Color.RED + value + "is not true or false!");
+    		}			
+		}
 		else if(name.equalsIgnoreCase("npcs"))
 		{
 			try
@@ -195,7 +228,10 @@ public class CommandServerSettings extends CommandBase
 			server.setGameType(gm);
 			sender.sendChatToPlayer("Global gamemode set to:"+ gm.getName());
 		}
-    	
+		else
+		{
+			sender.sendChatToPlayer(dries007.SimpleCore.Color.RED + name + " is not a recognized setting.");
+		}
     }
     
     public List addTabCompletionOptions(ICommandSender sender, String[] args)
