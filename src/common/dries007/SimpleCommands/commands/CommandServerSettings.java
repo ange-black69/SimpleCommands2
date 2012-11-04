@@ -39,6 +39,7 @@ public class CommandServerSettings extends CommandBase
     
     public void processCommand(ICommandSender sender, String[] args)
     {
+    	MinecraftServer server = SimpleCore.server;
     	if(args.length==0)
     	{
     		sender.sendChatToPlayer("List of available settings:");
@@ -52,7 +53,21 @@ public class CommandServerSettings extends CommandBase
     	{
     		set(sender, args[0], args[1]);
     	}
+    	else if(args[0].equalsIgnoreCase("motd"))
+    	{
+    		String msg = args[1];
+    		for(int i = 2; i < args.length; i++)
+    		{
+    			msg = msg + " " + args[i];
+    		}
+			server.setMOTD(msg);
+			sender.sendChatToPlayer("MOTD is set to:'" + server.getMOTD() + "'");
+		}
     	else throw new WrongUsageException(getCommandUsage(sender));
+    	if (server.isDedicatedServer())
+    	{
+    		((DedicatedServer) server).saveProperties();
+    	}
     }
     
     public void get(ICommandSender sender, String name)
