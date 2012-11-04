@@ -44,7 +44,7 @@ public class CommandPwDel extends CommandBase
     		while (pws.hasNext())
     		{
     			NBTTagString pw = (NBTTagString) pws.next();
-    			if (!pw.getName().equalsIgnoreCase(args[1]))
+    			if (!pw.getName().equalsIgnoreCase(args[0]))
     			{
     				newData.setString(pw.getName(), pw.data);
     			}
